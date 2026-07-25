@@ -1,6 +1,6 @@
 # Declarative Automation Bundle configuration, more info here: https://docs.databricks.com/en/dev-tools/bundles/settings.html
 bundle:
-  name: "finnhub_deployment"
+  name: "finnhub"
 
 include:
   - jobs/*.yml
