@@ -1,100 +1,255 @@
-# 🚀 GitPulse -- Enterprise GitHub Events Analytics Platform
+# 📈 FinPulse – Enterprise Financial Market Data Platform
 
-## Project Overview
+> An end-to-end Data Engineering project built on **Databricks Free Edition** using the **Finnhub API**. The platform ingests, transforms, and analyzes financial market data using a **Medallion Architecture (Bronze → Silver → Gold)** with enterprise-grade features such as metadata-driven processing, incremental loading, data quality validation, audit logging, and KPI generation.
 
-GitPulse is an end-to-end Data Engineering project built on **Databricks
-Community Edition** using the **GitHub Events API**.
+---
 
-It implements a Medallion Architecture (**Bronze → Silver → Gold**) with
-incremental loading, data quality validation, logging, auditing,
-metadata-driven processing, and business KPI generation.
+## 📌 Project Overview
 
-## Business Problem
+FinPulse is designed to simulate a real-world financial data platform used by investment firms and fintech companies.
 
-Organizations need an automated way to analyze GitHub public activity,
-identify trends, and monitor repository and developer engagement.
+The platform automates the ingestion of financial market data from the Finnhub API, processes it using Apache Spark, stores it in Delta Lake, and produces analytics-ready datasets for business reporting.
 
-## Architecture
+---
 
-``` text
-GitHub Events API
-        │
-        ▼
- Bronze Ingestion
-        │
-        ▼
- Bronze (Raw JSON)
-        │
-        ▼
- Silver (Clean & Standardized)
-        │
-        ▼
- Gold (Business KPIs)
-        │
-        ▼
- SQL Analytics
+## 🎯 Business Problem
+
+Financial organizations require timely, accurate, and scalable access to market data for analytics and decision-making.
+
+Manual data collection is:
+- Time-consuming
+- Error-prone
+- Difficult to scale
+- Unsuitable for enterprise reporting
+
+FinPulse addresses these challenges by automating the complete data pipeline.
+
+---
+
+# 🏗 Solution Architecture
+
+```text
+                 Finnhub API
+                      │
+                      ▼
+         Bronze Ingestion Notebook
+                      │
+                      ▼
+          Bronze Layer (Raw JSON)
+                      │
+                      ▼
+     Silver Layer (Clean & Standardized)
+                      │
+                      ▼
+      Gold Layer (Business KPIs)
+                      │
+                      ▼
+        Databricks SQL Analytics
 ```
 
-## Technology Stack
+---
 
--   Databricks Community Edition
--   Apache Spark (PySpark)
--   Delta Lake
--   Python
--   SQL
--   GitHub Events API
--   Git & GitHub
+# 🏛 Medallion Architecture
 
-## Repository Structure
+## 🥉 Bronze Layer
+- Raw API response
+- JSON storage
+- Immutable data
+- Incremental ingestion
 
-``` text
-GitPulse/
+---
+
+## 🥈 Silver Layer
+- Flatten nested JSON
+- Remove duplicates
+- Data standardization
+- Null handling
+- Data type conversions
+
+---
+
+## 🥇 Gold Layer
+Business-ready datasets including:
+
+- Daily Stock Summary
+- Top Gainers
+- Top Losers
+- Most Active Stocks
+- Sector Performance
+- Company Performance
+- Market Capitalization
+- Trading Volume
+- Historical Trends
+
+---
+
+# ⚙️ Technology Stack
+
+| Technology | Purpose |
+|------------|----------|
+| Databricks Free Edition | Data Processing |
+| Apache Spark (PySpark) | Distributed Processing |
+| Delta Lake | Data Storage |
+| Python | API Integration |
+| SQL | Analytics |
+| Finnhub API | Financial Market Data |
+| Git & GitHub | Version Control |
+
+---
+
+# 📂 Repository Structure
+
+```text
+FinPulse/
+│
 ├── docs/
+│   ├── BRD
+│   ├── SRD
+│   ├── ADD
+│   ├── HLD
+│   ├── LLD
+│   ├── STM
+│   ├── Data Dictionary
+│   ├── Metadata Design
+│   ├── Data Quality Framework
+│   └── Logging & Audit Design
+│
 ├── notebooks/
+│   ├── bronze/
+│   ├── silver/
+│   ├── gold/
+│   ├── common/
+│   └── metadata/
+│
 ├── sql/
+│
+├── configs/
+│
 ├── sample_data/
+│
 ├── images/
-└── README.md
+│
+├── README.md
+│
+└── requirements.txt
 ```
 
-## Business KPIs
+---
 
--   Daily Active Repositories
--   Daily Active Developers
--   Push Events
--   Pull Requests
--   Fork Events
--   Watch Events
--   Hourly Activity
--   Top Repositories
--   Top Contributors
+# 📊 Business KPIs
 
-## Pipeline Workflow
+## Market KPIs
 
-1.  Ingest GitHub Events API
-2.  Load Bronze layer
-3.  Transform to Silver
-4.  Generate Gold KPIs
-5.  Execute Data Quality checks
-6.  Capture Audit Logs
-7.  Publish analytics
+- Daily Closing Price
+- Daily Opening Price
+- Daily High & Low
+- Daily Trading Volume
+- Daily Price Change %
+- Top Gainers
+- Top Losers
+- Most Active Stocks
 
-## Documentation
+---
 
--   BRD
--   SRD
--   ADD
--   HLD
--   LLD
--   STM
--   Data Dictionary
--   Data Quality Framework
--   Logging & Audit Design
--   Error Handling & Recovery Strategy
--   Metadata Design Document
+## Company KPIs
 
-## Author
+- Market Capitalization
+- P/E Ratio
+- EPS
+- Dividend Yield
+- 52 Week High
+- 52 Week Low
+
+---
+
+# 🔄 Pipeline Workflow
+
+```text
+Read Pipeline Configuration
+            │
+            ▼
+Read Watermark
+            │
+            ▼
+Call Finnhub API
+            │
+            ▼
+Store Raw JSON (Bronze)
+            │
+            ▼
+Validate Data Quality
+            │
+            ▼
+Transform to Silver
+            │
+            ▼
+Generate Gold KPIs
+            │
+            ▼
+Update Metadata
+            │
+            ▼
+Write Audit Logs
+            │
+            ▼
+Publish Analytics
+```
+
+---
+
+# 📋 Enterprise Features
+
+- Metadata-Driven Processing
+- Incremental Data Loading
+- Watermark Framework
+- Data Quality Validation
+- Audit Logging
+- Error Handling
+- Retry Mechanism
+- Delta Lake Storage
+- Medallion Architecture
+- Modular Notebook Design
+
+---
+
+# 📑 Documentation
+
+The project includes enterprise documentation:
+
+- Business Requirements Document (BRD)
+- Software Requirements Document (SRD)
+- Architecture Design Document (ADD)
+- High-Level Design (HLD)
+- Low-Level Design (LLD)
+- Source-to-Target Mapping (STM)
+- Data Dictionary
+- Metadata Design
+- Data Quality Framework
+- Logging & Audit Design
+- Error Handling & Recovery Strategy
+
+---
+
+# 🚀 Future Enhancements
+
+- Structured Streaming
+- Databricks Workflows
+- Machine Learning Price Forecasting
+- Technical Indicators
+- Market Sentiment Analysis
+- Interactive Dashboards
+- Multi-Source Financial Data Integration
+
+---
+
+# 👨‍💻 Author
 
 **Aniruddha Giri**
 
-Data Engineer \| Azure \| Databricks \| PySpark \| SQL \| Python
+**Data Engineer**
+
+**Skills:** Databricks • PySpark • Python • SQL • Delta Lake • Data Engineering
+
+---
+
+## ⭐ If you found this project useful, consider giving it a star!
