@@ -1,0 +1,35 @@
+resources:
+  jobs:
+    daily_ingestion:
+      name: daily_ingestion
+      timeout_seconds: 7200 
+      trigger:
+        pause_status: UNPAUSED
+        periodic:
+          interval: 1
+          unit: DAYS
+      tasks:
+        - task_key: run_ingestion
+          notebook_task:
+            notebook_path: /Workspace/Users/girianiruddha4@gmail.com/Finnhub/notebooks/control_framework/control_fw
+            base_parameters:
+              env: dev
+              param_name: m101_finnhub
+              process_name: finnhub_daily_ingestion
+              run_type: scheduled
+              execution_type: ingestion
+            source: WORKSPACE
+          email_notifications:
+            on_success:
+              - girianiruddha4@gmail.com
+            on_failure:
+              - girianiruddha4@gmail.com
+          environment_key: Default
+      queue:
+        enabled: true
+      environments:
+        - environment_key: Default
+          spec:
+            environment_version: "5"
+      performance_target: PERFORMANCE_OPTIMIZED
+
