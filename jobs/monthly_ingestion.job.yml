@@ -1,8 +1,7 @@
 resources:
   jobs:
-    monthly_ingestion:
-      name: monthly_ingestion
-      timeout_seconds: 7200
+    monthly_process:
+      name: monthly_process
       schedule:
         quartz_cron_expression: 54 0 17 1 * ?
         timezone_id: Asia/Calcutta
@@ -24,6 +23,23 @@ resources:
             on_failure:
               - girianiruddha4@gmail.com
           environment_key: finnhubb_monthly_ingestion_environment
+        - task_key: sadp_monthly_load
+          depends_on:
+            - task_key: finnhubb_monthly_ingestion
+          notebook_task:
+            notebook_path: /Workspace/Users/girianiruddha4@gmail.com/Finnhub/notebooks/control_framework/control_fw
+            base_parameters:
+              env: dev
+              param_name: finnhub_dp
+              process_name: finnhub_dp_monthly_load
+              run_type: scheduled
+              execution_type: consumption_SADP
+            source: WORKSPACE
+          email_notifications:
+            on_success:
+              - girianiruddha4@gmail.com
+            on_failure:
+              - girianiruddha4@gmail.com
       queue:
         enabled: true
       environments:
