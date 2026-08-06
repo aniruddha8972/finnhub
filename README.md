@@ -32,16 +32,16 @@ FinPulse addresses these challenges by automating the complete data pipeline.
                  Finnhub API
                       │
                       ▼
-         Bronze Ingestion Notebook
+              Ingestion Notebook
                       │
                       ▼
-          Bronze Layer (Raw JSON)
+  Bronze Layer - SADP (Clean & Standardized)
                       │
                       ▼
-     Silver Layer (Clean & Standardized)
+Silver Layer - AADP (processing & tranformation)
                       │
                       ▼
-      Gold Layer (Business KPIs)
+Gold Layer - CADP (Business KPIs & report / view creation)
                       │
                       ▼
         Databricks SQL Analytics
@@ -51,7 +51,7 @@ FinPulse addresses these challenges by automating the complete data pipeline.
 
 # 🏛 Medallion Architecture
 
-## 🥉 Bronze Layer
+## 🥉 NI Layer
 - Raw API response
 - JSON storage
 - Immutable data
@@ -59,7 +59,7 @@ FinPulse addresses these challenges by automating the complete data pipeline.
 
 ---
 
-## 🥈 Silver Layer
+## 🥈 Bronze Layer
 - Flatten nested JSON
 - Remove duplicates
 - Data standardization
@@ -67,6 +67,11 @@ FinPulse addresses these challenges by automating the complete data pipeline.
 - Data type conversions
 
 ---
+
+## 🥇 Silver Layer
+- Data standardization
+- Data transformation
+- data Pre processing
 
 ## 🥇 Gold Layer
 Business-ready datasets including:
@@ -115,15 +120,21 @@ FinPulse/
 │   └── Logging & Audit Design
 │
 ├── notebooks/
-│   ├── bronze/
-│   ├── silver/
-│   ├── gold/
-│   ├── common/
+│   ├── ingestion/
+│   ├── consumption_SADP/
+│   ├── consumption_AADP/
+│   ├── consumption_CADP/
+│   ├── control_framework/
+│       ├──.gitignore/config
+│           ├──dev.json
+│           ├──sit.json
+│           ├──uat.json
+│           ├──prod.json
+│           ├──s&p_500.csv
 │   └── metadata/
 │
 ├── sql/
 │
-├── configs/
 │
 ├── sample_data/
 │
@@ -180,7 +191,10 @@ Store Raw JSON (Bronze)
 Validate Data Quality
             │
             ▼
-Transform to Silver
+filtering to SADP
+            │
+            ▼
+Transform to AADP
             │
             ▼
 Generate Gold KPIs
