@@ -1,8 +1,8 @@
 resources:
   jobs:
-    daily_ingestion:
-      name: daily_ingestion
-      timeout_seconds: 7200 
+    daily_process:
+      name: daily_process
+      timeout_seconds: 7200
       trigger:
         pause_status: UNPAUSED
         periodic:
@@ -25,6 +25,23 @@ resources:
             on_failure:
               - girianiruddha4@gmail.com
           environment_key: Default
+        - task_key: sadp_daily_load
+          depends_on:
+            - task_key: run_ingestion
+          notebook_task:
+            notebook_path: /Workspace/Users/girianiruddha4@gmail.com/Finnhub/notebooks/control_framework/control_fw
+            base_parameters:
+              env: dev
+              param_name: finnhub_dp
+              process_name: finnhub_dp_daily_load
+              run_type: scheduled
+              execution_type: consumption_SADP
+            source: WORKSPACE
+          email_notifications:
+            on_success:
+              - girianiruddha4@gmail.com
+            on_failure:
+              - girianiruddha4@gmail.com
       queue:
         enabled: true
       environments:
@@ -32,4 +49,3 @@ resources:
           spec:
             environment_version: "5"
       performance_target: PERFORMANCE_OPTIMIZED
-
