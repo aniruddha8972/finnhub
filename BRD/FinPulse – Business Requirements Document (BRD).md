@@ -569,7 +569,7 @@ These capabilities are considered future enhancements and are not required for t
 |---|---|---|
 | Project Owner / Data Engineer | Aniruddha Giri | Draft |
 | Business Stakeholder | Investment Analyst | TBD |
-| Technical Reviewer | TBD | TBD |
+| Technical Reviewer | Aniruddha Giri | TBD |
 
 ---
 
