@@ -3,7 +3,7 @@ bundle:
   name: "finnhub"
 
 include:
-  - jobs/*job.yml
+  - jobs/*.job.yml
 
 targets:
   # The 'dev' target, for development purposes. This target is the default.
