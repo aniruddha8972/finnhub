@@ -1,7 +1,7 @@
 resources:
   jobs:
     daily_process:
-      name: daily_process
+      name: ${bundle.target}_daily_process
       timeout_seconds: 7200
       trigger:
         pause_status: UNPAUSED
@@ -9,11 +9,11 @@ resources:
           interval: 1
           unit: DAYS
       tasks:
-        - task_key: run_ingestion
+        - task_key: ${bundle.target}_run_ingestion
           notebook_task:
             notebook_path: /Workspace/Users/girianiruddha4@gmail.com/Finnhub/notebooks/control_framework/control_fw
             base_parameters:
-              env: dev
+              env: ${var.environment}
               param_name: m101_finnhub
               process_name: finnhub_daily_ingestion
               run_type: scheduled
@@ -25,13 +25,13 @@ resources:
             on_failure:
               - girianiruddha4@gmail.com
           environment_key: Default
-        - task_key: sadp_daily_load
+        - task_key: ${bundle.target}_sadp_daily_load
           depends_on:
-            - task_key: run_ingestion
+            - task_key: ${bundle.target}_run_ingestion
           notebook_task:
             notebook_path: /Workspace/Users/girianiruddha4@gmail.com/Finnhub/notebooks/control_framework/control_fw
             base_parameters:
-              env: dev
+              env: ${var.environment}
               param_name: finnhub_dp
               process_name: finnhub_dp_daily_load
               run_type: scheduled
