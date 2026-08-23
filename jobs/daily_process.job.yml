@@ -3,11 +3,6 @@ resources:
     daily_process:
       name: ${bundle.target}_daily_process
       timeout_seconds: 7200
-      trigger:
-        pause_status: UNPAUSED
-        periodic:
-          interval: 1
-          unit: DAYS
       tasks:
         - task_key: ${bundle.target}_run_ingestion
           notebook_task:
@@ -42,6 +37,23 @@ resources:
               - girianiruddha4@gmail.com
             on_failure:
               - girianiruddha4@gmail.com
+        - task_key: ${bundle.target}_aadp_daily_load
+          depends_on:
+            - task_key: ${bundle.target}_sadp_daily_load
+          notebook_task:
+            notebook_path: /Workspace/Users/girianiruddha4@gmail.com/Finnhub/notebooks/control_framework/control_fw
+            base_parameters:
+              env: ${var.environment}
+              param_name: aadp_finnhub
+              process_name: aadp_daily_stocks_load
+              run_type: scheduled
+              execution_type: consumption_AADP
+            source: WORKSPACE
+          email_notifications:
+            on_success:
+              - girianiruddha4@gmail.com
+            on_failure:
+              - girianiruddha4@gmail.com
       queue:
         enabled: true
       environments:
@@ -49,3 +61,7 @@ resources:
           spec:
             environment_version: "5"
       performance_target: PERFORMANCE_OPTIMIZED
+      schedule:
+        pause_status: UNPAUSED
+        quartz_cron_expression: 13 0 13 * * ?
+        timezone_id: Asia/Calcutta
