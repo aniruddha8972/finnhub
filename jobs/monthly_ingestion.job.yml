@@ -3,8 +3,8 @@ resources:
     monthly_process:
       name: ${bundle.target}_monthly_process
       schedule:
-        quartz_cron_expression: 54 0 17 1 * ?
-        timezone_id: Asia/Calcutta
+        quartz_cron_expression: 54 30 17 1 * ?
+        timezone_id: US/Eastern
         pause_status: UNPAUSED
       tasks:
         - task_key: ${bundle.target}_finnhubb_monthly_ingestion
