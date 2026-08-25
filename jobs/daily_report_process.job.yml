@@ -19,6 +19,19 @@ resources:
               - girianiruddha4@gmail.com
             on_failure:
               - girianiruddha4@gmail.com
+        - task_key: ${bundle.target}_Dashboard_Report_Generator
+          depends_on:
+            - task_key: ${bundle.target}_run_report_process
+          notebook_task:
+            notebook_path: /Workspace/Users/girianiruddha4@gmail.com/Finnhub/notebooks/consumption_CADP/Dashboard_Report_Generator
+            base_parameters:
+              env: ${var.environment}
+            source: WORKSPACE
+          email_notifications:
+            on_success:
+              - girianiruddha4@gmail.com
+            on_failure:
+              - girianiruddha4@gmail.com
           environment_key: Default
       queue:
         enabled: true
