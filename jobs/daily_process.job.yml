@@ -63,5 +63,5 @@ resources:
       performance_target: PERFORMANCE_OPTIMIZED
       schedule:
         pause_status: UNPAUSED
-        quartz_cron_expression: 13 0 13 * * ?
-        timezone_id: Asia/Calcutta
+        quartz_cron_expression: "0 30 16 * * ?"
+        timezone_id: US/Eastern

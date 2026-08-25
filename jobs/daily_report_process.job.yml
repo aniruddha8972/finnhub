@@ -1,0 +1,46 @@
+resources:
+  jobs:
+    daily_report_process:
+      name: ${bundle.target}_daily_report_process
+      timeout_seconds: 7200
+      tasks:
+        - task_key: ${bundle.target}_run_report_process
+          notebook_task:
+            notebook_path: /Workspace/Users/girianiruddha4@gmail.com/Finnhub/notebooks/control_framework/control_fw
+            base_parameters:
+              env: ${var.environment}
+              param_name: cadp_finnhub
+              process_name: cadp_daily_stocks_report
+              run_type: scheduled
+              execution_type: consumption_CADP
+            source: WORKSPACE
+          email_notifications:
+            on_success:
+              - girianiruddha4@gmail.com
+            on_failure:
+              - girianiruddha4@gmail.com
+        - task_key: ${bundle.target}_Dashboard_Report_Generator
+          depends_on:
+            - task_key: ${bundle.target}_run_report_process
+          notebook_task:
+            notebook_path: /Workspace/Users/girianiruddha4@gmail.com/Finnhub/notebooks/consumption_CADP/Dashboard_Report_Generator
+            base_parameters:
+              env: ${var.environment}
+            source: WORKSPACE
+          email_notifications:
+            on_success:
+              - girianiruddha4@gmail.com
+            on_failure:
+              - girianiruddha4@gmail.com
+          environment_key: Default
+      queue:
+        enabled: true
+      environments:
+        - environment_key: Default
+          spec:
+            environment_version: "5"
+      performance_target: PERFORMANCE_OPTIMIZED
+      schedule:
+        pause_status: UNPAUSED
+        quartz_cron_expression: "0 30 18 * * ?"
+        timezone_id: US/Eastern
